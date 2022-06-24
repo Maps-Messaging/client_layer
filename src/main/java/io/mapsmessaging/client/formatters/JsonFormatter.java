@@ -11,6 +11,11 @@ public class JsonFormatter implements MessageFormatter {
     return new JSONObject(new String(payload));
   }
 
+  @Override
+  public JSONObject parseToJson(byte[] payload) throws IOException {
+    return (JSONObject) parse(payload);
+  }
+
   public byte[] pack(Object object) throws IOException {
     String toPack = null;
     if (object instanceof String) {

@@ -2,16 +2,17 @@ package io.mapsmessaging.client.formatters;
 
 import io.mapsmessaging.client.schema.SchemaConfig;
 import java.io.IOException;
+import org.json.JSONObject;
 
 public interface MessageFormatter {
 
-  default String getName() {
-    return "RAW";
-  }
+ String getName();
 
   default Object parse(byte[] payload) throws IOException {
     return payload;
   }
+
+  JSONObject parseToJson(byte[] payload) throws IOException;
 
   default byte[] pack(Object object) throws IOException {
     if (object instanceof byte[]) {

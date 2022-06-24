@@ -13,6 +13,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.json.JSONObject;
+import org.json.XML;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -32,6 +34,11 @@ public class XmlFormatter implements MessageFormatter {
 
   public String getName() {
     return "XML";
+  }
+
+  @Override
+  public JSONObject parseToJson(byte[] payload) {
+    return XML.toJSONObject(new String(payload));
   }
 
   public Object parse(byte[] payload) throws IOException {

@@ -3,6 +3,7 @@ package io.mapsmessaging.client.formatters;
 import com.google.protobuf.DescriptorProtos;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
+import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.DynamicMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -12,7 +13,13 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class ProtoBufFormatter implements MessageFormatter {
 
@@ -34,6 +41,12 @@ public class ProtoBufFormatter implements MessageFormatter {
 
   public Object parse(byte[] payload) throws InvalidProtocolBufferException {
     return DynamicMessage.parseFrom(descriptor.findMessageTypeByName(messageName), payload);
+  }
+
+  @Override
+  public JSONObject parseToJson(byte[] payload) throws IOException {
+    DynamicMessage dynamicMessage = (DynamicMessage)parse(payload);
+    return convertToJson(dynamicMessage);
   }
 
   public byte[] pack(Object object) throws IOException {
@@ -63,5 +76,33 @@ public class ProtoBufFormatter implements MessageFormatter {
       fin.close();
     }
     return Descriptors.FileDescriptor.buildFrom(set.getFile(set.getFileCount() - 1), dependencyFileDescriptorList.toArray(new FileDescriptor[0]));
+  }
+
+  private JSONObject convertToJson(DynamicMessage message){
+    JSONObject jsonObject= new JSONObject();
+    Map<String, Object> map = new LinkedHashMap<>();
+    for(Entry<FieldDescriptor, Object> entry:message.getAllFields().entrySet()){
+      if(entry.getValue() instanceof Collection){
+        jsonObject.put(entry.getKey().getName(), convertToJson((Collection)entry.getValue()));
+      }
+      else{
+        jsonObject.put(entry.getKey().getName(), entry.getValue());
+        map.put(entry.getKey().getName(), entry.getValue());
+      }
+    }
+    return jsonObject;
+  }
+
+  private JSONArray convertToJson(Collection<Object> collection){
+    JSONArray list = new JSONArray();
+    for(Object obj:collection){
+      if(obj instanceof DynamicMessage){
+        list.put(convertToJson((DynamicMessage) obj));
+      }
+      else{
+        list.put(obj);
+      }
+    }
+    return list;
   }
 }
