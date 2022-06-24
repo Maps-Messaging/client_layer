@@ -36,6 +36,12 @@ public class ProtoBufSchemaConfig extends SchemaConfig {
     super("ProtoBuf");
   }
 
+  protected ProtoBufSchemaConfig(String name, String base64EncodedDescriptor) {
+    super("ProtoBuf");
+    messageName = name;
+    descriptor = Base64.getDecoder().decode(base64EncodedDescriptor);
+  }
+
 
   @Override
   protected JSONObject packData() {

@@ -25,7 +25,6 @@ public abstract class SchemaConfig {
   @Getter
   private String format;
 
-
   public SchemaConfig(String format){
     this.format = format;
   }
