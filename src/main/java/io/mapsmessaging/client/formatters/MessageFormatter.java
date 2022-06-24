@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public interface MessageFormatter {
 
-  default String getName(){
+  default String getName() {
     return "RAW";
   }
 
@@ -13,8 +13,8 @@ public interface MessageFormatter {
     return payload;
   }
 
-  default byte[] pack(Object object) throws IOException{
-    if(object instanceof byte[]){
+  default byte[] pack(Object object) throws IOException {
+    if (object instanceof byte[]) {
       return (byte[]) object;
     }
     throw new IOException("Unexpected object to be packed");

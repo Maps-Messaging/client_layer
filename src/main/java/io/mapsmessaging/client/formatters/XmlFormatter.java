@@ -16,7 +16,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-public class XmlFormatter  implements MessageFormatter {
+public class XmlFormatter implements MessageFormatter {
 
   private final DocumentBuilder parser;
 
@@ -30,7 +30,7 @@ public class XmlFormatter  implements MessageFormatter {
     }
   }
 
-  public String getName(){
+  public String getName() {
     return "XML";
   }
 
@@ -43,13 +43,13 @@ public class XmlFormatter  implements MessageFormatter {
   }
 
   public byte[] pack(Object object) throws IOException {
-    String toPack=null;
-    if(object instanceof String){
-      toPack = (String)object;
+    String toPack = null;
+    if (object instanceof String) {
+      toPack = (String) object;
     }
-    if(object instanceof Document){
+    if (object instanceof Document) {
       try {
-        DOMSource domSource = new DOMSource((Document)object);
+        DOMSource domSource = new DOMSource((Document) object);
         StringWriter writer = new StringWriter();
         StreamResult result = new StreamResult(writer);
         TransformerFactory tf = TransformerFactory.newInstance();
@@ -60,7 +60,7 @@ public class XmlFormatter  implements MessageFormatter {
         throw new IOException(e);
       }
     }
-    if(toPack != null){
+    if (toPack != null) {
       return toPack.getBytes(StandardCharsets.UTF_8);
     }
     throw new IOException("Unexpected object to be packed");

@@ -19,7 +19,6 @@
 package io.mapsmessaging.client.schema;
 
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +43,7 @@ class TestProtobuf {
     Assertions.assertEquals("ProtoBuf", jsonObject.getJSONObject("schema").get("format"));
 
     String base64Encoded = new String(Base64.getEncoder().encode(descriptor));
-    Assertions.assertEquals(base64Encoded,jsonObject.getJSONObject("schema").get("descriptor"));
+    Assertions.assertEquals(base64Encoded, jsonObject.getJSONObject("schema").get("descriptor"));
   }
 
   @Test

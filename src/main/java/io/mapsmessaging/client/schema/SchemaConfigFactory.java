@@ -7,7 +7,8 @@ import org.json.JSONObject;
 public class SchemaConfigFactory {
 
   private static final SchemaConfigFactory instance = new SchemaConfigFactory();
-  public static SchemaConfigFactory getInstance(){
+
+  public static SchemaConfigFactory getInstance() {
     return instance;
   }
 
@@ -19,13 +20,17 @@ public class SchemaConfigFactory {
 
   public SchemaConfig parse(String payload) throws IOException {
     JSONObject schemaJson = new JSONObject(payload);
-    if(!schemaJson.has("schema")) throw new IOException("Not a valid schema config");
+    if (!schemaJson.has("schema")) {
+      throw new IOException("Not a valid schema config");
+    }
 
     schemaJson = schemaJson.getJSONObject("schema");
-    if(!schemaJson.has("format")) throw new IOException("Not a valid schema config");
+    if (!schemaJson.has("format")) {
+      throw new IOException("Not a valid schema config");
+    }
 
-    for(SchemaConfig config:schemaConfigServiceLoader){
-      if(config.getFormat().equalsIgnoreCase(schemaJson.getString("format"))){
+    for (SchemaConfig config : schemaConfigServiceLoader) {
+      if (config.getFormat().equalsIgnoreCase(schemaJson.getString("format"))) {
         return config.getInstance(schemaJson);
       }
     }
@@ -33,7 +38,7 @@ public class SchemaConfigFactory {
 
   }
 
-  private SchemaConfigFactory(){
+  private SchemaConfigFactory() {
     schemaConfigServiceLoader = ServiceLoader.load(SchemaConfig.class);
   }
 

@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProtoBufFormatter  implements MessageFormatter {
+public class ProtoBufFormatter implements MessageFormatter {
 
   private final String messageName;
   private final FileDescriptor descriptor;
@@ -28,7 +28,7 @@ public class ProtoBufFormatter  implements MessageFormatter {
     }
   }
 
-  public String getName(){
+  public String getName() {
     return "ProtoBuf";
   }
 
@@ -37,8 +37,8 @@ public class ProtoBufFormatter  implements MessageFormatter {
   }
 
   public byte[] pack(Object object) throws IOException {
-    if(object instanceof com.google.protobuf.GeneratedMessageV3){
-      return ((com.google.protobuf.GeneratedMessageV3)object).toByteArray();
+    if (object instanceof com.google.protobuf.GeneratedMessageV3) {
+      return ((com.google.protobuf.GeneratedMessageV3) object).toByteArray();
     }
     throw new IOException("Unexpected object received");
   }
@@ -56,12 +56,12 @@ public class ProtoBufFormatter  implements MessageFormatter {
     try {
       set = DescriptorProtos.FileDescriptorSet.parseFrom(fin);
       dependencyFileDescriptorList = new ArrayList<>();
-      for(int i=0; i<set.getFileCount()-1;i++) {
+      for (int i = 0; i < set.getFileCount() - 1; i++) {
         dependencyFileDescriptorList.add(FileDescriptor.buildFrom(set.getFile(i), dependencyFileDescriptorList.toArray(new FileDescriptor[i])));
       }
     } finally {
       fin.close();
     }
-    return Descriptors.FileDescriptor.buildFrom(set.getFile(set.getFileCount()-1), dependencyFileDescriptorList.toArray(new FileDescriptor[0]));
+    return Descriptors.FileDescriptor.buildFrom(set.getFile(set.getFileCount() - 1), dependencyFileDescriptorList.toArray(new FileDescriptor[0]));
   }
 }

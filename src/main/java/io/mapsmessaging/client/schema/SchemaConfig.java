@@ -25,17 +25,17 @@ public abstract class SchemaConfig {
   @Getter
   private String format;
 
-  public SchemaConfig(String format){
+  public SchemaConfig(String format) {
     this.format = format;
   }
 
-  public String pack(){
+  public String pack() {
     JSONObject jsonObject = new JSONObject();
     jsonObject.put("schema", packData());
     return jsonObject.toString(2);
   }
 
-  protected void packData(JSONObject jsonObject){
+  protected void packData(JSONObject jsonObject) {
     jsonObject.put("format", format);
   }
 

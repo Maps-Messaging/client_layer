@@ -10,7 +10,7 @@ import org.apache.qpid.proton.message.Message.Factory;
 
 public class QpidJmsFormatter implements MessageFormatter {
 
-  public String getName(){
+  public String getName() {
     return "QPID-JMS";
   }
 
@@ -32,9 +32,9 @@ public class QpidJmsFormatter implements MessageFormatter {
       Message protonMsg = (Message) object;
       WritableBuffer sizingBuffer = new DroppingWritableBuffer();
       protonMsg.encode(sizingBuffer);
-      byte[] data = new byte[sizingBuffer.position()+10];
+      byte[] data = new byte[sizingBuffer.position() + 10];
       int size = protonMsg.encode(data, 0, data.length);
-      if(size != data.length){
+      if (size != data.length) {
         byte[] tmp = new byte[size];
         System.arraycopy(data, 0, tmp, 0, size);
         data = tmp;

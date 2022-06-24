@@ -7,19 +7,19 @@ import org.json.JSONObject;
 
 public class JsonFormatter implements MessageFormatter {
 
-  public Object parse(byte[] payload){
+  public Object parse(byte[] payload) {
     return new JSONObject(new String(payload));
   }
 
   public byte[] pack(Object object) throws IOException {
-    String toPack=null;
-    if(object instanceof String){
-      toPack = (String)object;
+    String toPack = null;
+    if (object instanceof String) {
+      toPack = (String) object;
     }
-    if(object instanceof JSONObject){
-      toPack = ((JSONObject)object).toString(2);
+    if (object instanceof JSONObject) {
+      toPack = ((JSONObject) object).toString(2);
     }
-    if(toPack != null){
+    if (toPack != null) {
       return toPack.getBytes(StandardCharsets.UTF_8);
     }
     throw new IOException("Unexpected object to be packed");
@@ -31,7 +31,7 @@ public class JsonFormatter implements MessageFormatter {
   }
 
   @Override
-  public String getName(){
+  public String getName() {
     return "JSON";
   }
 
