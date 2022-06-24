@@ -219,6 +219,15 @@
       <artifactId>proton-j</artifactId>
       <version>0.33.10</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3 -->
+    <dependency>
+      <groupId>org.eclipse.paho</groupId>
+      <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+      <version>1.2.5</version>
+    </dependency>
+
+
     <!-- Junit5 -->
     <dependency>
       <artifactId>junit-jupiter-engine</artifactId>
