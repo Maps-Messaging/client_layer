@@ -1,5 +1,6 @@
 package io.mapsmessaging.client.formatters;
 
+import io.mapsmessaging.client.schema.SchemaConfig;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.json.JSONObject;
@@ -23,4 +24,15 @@ public class JsonFormatter implements MessageFormatter {
     }
     throw new IOException("Unexpected object to be packed");
   }
+
+  @Override
+  public MessageFormatter getInstance(SchemaConfig config) throws IOException {
+    return this;
+  }
+
+  @Override
+  public String getName(){
+    return "JSON";
+  }
+
 }

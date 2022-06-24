@@ -57,7 +57,7 @@ class TestProtobuf {
 
     Assertions.assertEquals("ProtoBuf", config.getFormat());
     String packed = config.pack();
-    SchemaConfig parsed = SchemaConfigFactory.parse(packed);
+    SchemaConfig parsed = SchemaConfigFactory.getInstance().parse(packed);
     Assertions.assertEquals("ProtoBuf", parsed.getFormat());
   }
 

@@ -51,4 +51,9 @@ public class ProtoBufSchemaConfig extends SchemaConfig {
     data.put("messageName", messageName);
     return data;
   }
+
+  protected SchemaConfig getInstance(JSONObject config){
+    return new ProtoBufSchemaConfig(config.getString("messageName"), config.getString("descriptor"));
+  }
+
 }

@@ -40,4 +40,6 @@ public abstract class SchemaConfig {
   }
 
   protected abstract JSONObject packData();
+
+  protected abstract SchemaConfig getInstance(JSONObject config);
 }

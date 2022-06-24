@@ -1,8 +1,13 @@
 package io.mapsmessaging.client.formatters;
 
+import io.mapsmessaging.client.schema.SchemaConfig;
 import java.io.IOException;
 
 public interface MessageFormatter {
+
+  default String getName(){
+    return "RAW";
+  }
 
   default Object parse(byte[] payload) throws IOException {
     return payload;
@@ -14,5 +19,7 @@ public interface MessageFormatter {
     }
     throw new IOException("Unexpected object to be packed");
   }
+
+  MessageFormatter getInstance(SchemaConfig config) throws IOException;
 
 }

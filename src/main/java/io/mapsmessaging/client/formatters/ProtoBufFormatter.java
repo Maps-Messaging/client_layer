@@ -6,6 +6,8 @@ import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.DynamicMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
+import io.mapsmessaging.client.schema.ProtoBufSchemaConfig;
+import io.mapsmessaging.client.schema.SchemaConfig;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +28,10 @@ public class ProtoBufFormatter  implements MessageFormatter {
     }
   }
 
+  public String getName(){
+    return "ProtoBuf";
+  }
+
   public Object parse(byte[] payload) throws InvalidProtocolBufferException {
     return DynamicMessage.parseFrom(descriptor.findMessageTypeByName(messageName), payload);
   }
@@ -35,6 +41,12 @@ public class ProtoBufFormatter  implements MessageFormatter {
       return ((com.google.protobuf.GeneratedMessageV3)object).toByteArray();
     }
     throw new IOException("Unexpected object received");
+  }
+
+  @Override
+  public MessageFormatter getInstance(SchemaConfig config) throws IOException {
+    ProtoBufSchemaConfig protoBufSchemaConfig = (ProtoBufSchemaConfig) config;
+    return new ProtoBufFormatter(protoBufSchemaConfig.getMessageName(), protoBufSchemaConfig.getDescriptor());
   }
 
   private FileDescriptor loadDescFile(byte[] descriptorImage) throws IOException, DescriptorValidationException {

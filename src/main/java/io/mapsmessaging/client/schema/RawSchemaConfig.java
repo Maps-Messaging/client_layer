@@ -17,8 +17,15 @@
  */
 package io.mapsmessaging.client.schema;
 
+import org.json.JSONObject;
+
 public class RawSchemaConfig extends SimpleSchemaConfig {
   public RawSchemaConfig() {
     super("RAW");
   }
+
+  protected SchemaConfig getInstance(JSONObject config){
+    return this;
+  }
+
 }

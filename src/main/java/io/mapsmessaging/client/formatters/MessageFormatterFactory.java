@@ -1,8 +1,8 @@
 package io.mapsmessaging.client.formatters;
 
-import io.mapsmessaging.client.schema.ProtoBufSchemaConfig;
 import io.mapsmessaging.client.schema.SchemaConfig;
 import java.io.IOException;
+import java.util.ServiceLoader;
 
 public class MessageFormatterFactory {
 
@@ -12,25 +12,23 @@ public class MessageFormatterFactory {
     return instance;
   }
 
+
+  private final ServiceLoader<MessageFormatter> messageFormatterServiceLoader;
+
+
   public MessageFormatter getFormatter(SchemaConfig config)throws IOException {
-    switch(config.getFormat()){
-      case "JSON":
-        return new JsonFormatter();
-
-      case "XML":
-        return new XmlFormatter();
-
-      case "ProtoBuf":
-        ProtoBufSchemaConfig protoBufSchemaConfig = (ProtoBufSchemaConfig) config;
-        return new ProtoBufFormatter(protoBufSchemaConfig.getMessageName(), protoBufSchemaConfig.getDescriptor());
-
-      case "RAW":
-        return new RawFormatter();
-
-      default:
-        throw new IOException("Unknown format config received");
+    for(MessageFormatter formatter:messageFormatterServiceLoader){
+      if(formatter.getName().equalsIgnoreCase(config.getFormat())){
+        return formatter.getInstance(config);
+      }
     }
+    throw new IOException("Unknown format config received");
   }
+
+  private MessageFormatterFactory(){
+    messageFormatterServiceLoader = ServiceLoader.load(MessageFormatter.class);
+  }
+
 
 }
 

@@ -17,8 +17,14 @@
  */
 package io.mapsmessaging.client.schema;
 
+import org.json.JSONObject;
+
 public class JsonSchemaConfig extends SimpleSchemaConfig {
   public JsonSchemaConfig() {
     super("JSON");
+  }
+
+  protected SchemaConfig getInstance(JSONObject config){
+    return this;
   }
 }

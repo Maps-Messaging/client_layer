@@ -1,5 +1,6 @@
 package io.mapsmessaging.client.formatters;
 
+import io.mapsmessaging.client.schema.SchemaConfig;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -27,6 +28,10 @@ public class XmlFormatter  implements MessageFormatter {
     } catch (ParserConfigurationException e) {
       throw new IOException(e);
     }
+  }
+
+  public String getName(){
+    return "XML";
   }
 
   public Object parse(byte[] payload) throws IOException {
@@ -59,6 +64,11 @@ public class XmlFormatter  implements MessageFormatter {
       return toPack.getBytes(StandardCharsets.UTF_8);
     }
     throw new IOException("Unexpected object to be packed");
+  }
+
+  @Override
+  public MessageFormatter getInstance(SchemaConfig config) throws IOException {
+    return this;
   }
 
 }

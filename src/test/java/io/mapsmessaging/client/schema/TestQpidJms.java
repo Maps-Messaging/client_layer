@@ -5,24 +5,23 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class TestRaw {
+public class TestQpidJms {
 
   @Test
-  void testRaw() {
-    SchemaConfig config = new RawSchemaConfig();
-    Assertions.assertEquals("RAW", config.getFormat());
+  void testJsonSchemaConfig() {
+    SchemaConfig config = new QpidJmsSchemaConfig();
+    Assertions.assertEquals("QPID-JMS", config.getFormat());
     String packed = config.pack();
     JSONObject jsonObject = new JSONObject(packed);
-    Assertions.assertEquals("RAW", jsonObject.getJSONObject("schema").get("format"));
+    Assertions.assertEquals("QPID-JMS", jsonObject.getJSONObject("schema").get("format"));
   }
 
   @Test
   void testSchemaReload() throws IOException {
-    SchemaConfig config = new RawSchemaConfig();
-    Assertions.assertEquals("RAW", config.getFormat());
+    SchemaConfig config = new QpidJmsSchemaConfig();
+    Assertions.assertEquals("QPID-JMS", config.getFormat());
     String packed = config.pack();
     SchemaConfig parsed = SchemaConfigFactory.getInstance().parse(packed);
-    Assertions.assertEquals("RAW", parsed.getFormat());
+    Assertions.assertEquals("QPID-JMS", parsed.getFormat());
   }
-
 }

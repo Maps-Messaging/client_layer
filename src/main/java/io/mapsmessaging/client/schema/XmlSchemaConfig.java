@@ -17,8 +17,15 @@
  */
 package io.mapsmessaging.client.schema;
 
+import org.json.JSONObject;
+
 public class XmlSchemaConfig extends SimpleSchemaConfig {
   public XmlSchemaConfig() {
     super("XML");
   }
+
+  protected SchemaConfig getInstance(JSONObject config){
+    return this;
+  }
+
 }
