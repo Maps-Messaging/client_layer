@@ -25,6 +25,7 @@ public class QpidJmsFormatter implements MessageFormatter {
   public String getName() {
     return "QPID-JMS";
   }
+  public QpidJmsFormatter(){}
 
   @Override
   public MessageFormatter getInstance(SchemaConfig config) throws IOException {

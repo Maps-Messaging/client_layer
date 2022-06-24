@@ -26,6 +26,11 @@ public class ProtoBufFormatter implements MessageFormatter {
   private final String messageName;
   private final FileDescriptor descriptor;
 
+  public ProtoBufFormatter(){
+    messageName="";
+    descriptor = null;
+  }
+
   ProtoBufFormatter(String messageName, byte[] descriptorImage) throws IOException {
     try {
       this.descriptor = loadDescFile(descriptorImage);

@@ -22,7 +22,7 @@ public class XmlFormatter implements MessageFormatter {
 
   private final DocumentBuilder parser;
 
-  XmlFormatter() throws IOException {
+  public XmlFormatter() throws IOException {
     try {
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
       dbf.setNamespaceAware(true);

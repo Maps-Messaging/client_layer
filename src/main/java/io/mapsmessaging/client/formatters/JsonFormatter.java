@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 public class JsonFormatter implements MessageFormatter {
 
+  public JsonFormatter(){}
+
   public Object parse(byte[] payload) {
     return new JSONObject(new String(payload));
   }

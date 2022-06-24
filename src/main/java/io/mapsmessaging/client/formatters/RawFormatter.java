@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 public class RawFormatter implements MessageFormatter {
 
+  public RawFormatter(){}
   @Override
   public String getName() {
     return "RAW";
